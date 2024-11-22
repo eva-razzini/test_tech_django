@@ -31,18 +31,26 @@ def joueurs_list(request):
      joueurs = Joueur.objects.all().order_by('nom')
      return render(request, 'joueurs_list.html', {'joueurs': joueurs})
 
-def joueur_form(request):
+def joueur_form(request, pk=None):
+    if pk:
+        joueur = Joueur.objects.get(pk=pk)
+    else:
+        joueur = None
+
     if request.method == 'POST':
-        form = JoueurForm(request.POST)
+        form = JoueurForm(request.POST, instance=joueur)
         if form.is_valid():
-            joueur = form.save(commit=False)
             try:
+                joueur = form.save(commit=False)
                 joueur.full_clean()
                 joueur.save()
-                messages.success(request, "Le joueur a été créé avec succès.")
+                messages.success(request, "Le joueur a été sauvegardé avec succès.")
                 return redirect('joueurs_list')
             except ValidationError as e:
-                form.add_error(None, e.message_dict)
+                for field, errors in e.message_dict.items():
+                    for error in errors:
+                        form.add_error(field, error)
     else:
-        form = JoueurForm()
+        form = JoueurForm(instance=joueur)
+
     return render(request, 'joueur_form.html', {'form': form})

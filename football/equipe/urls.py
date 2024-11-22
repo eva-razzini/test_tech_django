@@ -8,4 +8,5 @@ urlpatterns = [
     path('equipes/create/', EquipeCreateView.as_view(), name='equipe-create'),
     path('joueur/create/', views.joueur_form, name='joueur_form'),
     path('joueurs/', views.joueurs_list, name='joueurs_list'),
+    path('joueur/edit/<int:pk>/', views.joueur_form, name='joueur_edit'),
 ]

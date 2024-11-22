@@ -1,7 +1,9 @@
 from django import forms
-from .models import Joueur
+from .models import Joueur, Equipe
+
 
 class JoueurForm(forms.ModelForm):
+    equipe = forms.ModelChoiceField(queryset=Equipe.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}))
     class Meta:
         model = Joueur
         fields = ['nom', 'poste', 'equipe']

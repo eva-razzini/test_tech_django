@@ -1,10 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Créer un nouveau joueur</h2>
+<h2>{% if form.instance.pk %}Modifier{% else %}Créer{% endif %} un joueur</h2>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    {% for field in form %}
+    <div class="form-group">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+        <div class="alert alert-danger">
+            {{ field.errors }}
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger">
+        {{ form.non_field_errors }}
+    </div>
+    {% endif %}
     <button type="submit" class="btn btn-primary">Enregistrer</button>
 </form>
 {% endblock %}
