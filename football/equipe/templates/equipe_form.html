@@ -1,0 +1,8 @@
+<form method="POST" action="{% url 'equipes-list-create' %}">
+    {% csrf_token %}
+    <label for="nom">Nom :</label>
+    <input type="text" name="nom" id="nom" required>
+    <label for="ville">Ville :</label>
+    <input type="text" name="ville" id="ville" required>
+    <button type="submit">Ajouter</button>
+</form>
