@@ -1,10 +1,9 @@
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import EquipeViewSet
-
-router = DefaultRouter()
-router.register(r'equipes', EquipeViewSet)
+from . import views
+from django.urls import path
+from .views import EquipeListCreate, EquipeListView, EquipeCreateView
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/equipes/', EquipeListCreate.as_view(), name='equipe-list-create'),
+    path('equipes/', views.equipe_list, name='equipe-list'),
+    path('equipes/create/', EquipeCreateView.as_view(), name='equipe-create'),
 ]

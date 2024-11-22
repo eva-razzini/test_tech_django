@@ -1,0 +1,6 @@
+<h1>Liste des équipes</h1>
+<ul>
+    {% for equipe in equipes %}
+    <li>{{ equipe.nom }} - {{ equipe.ville }}</li>
+    {% endfor %}
+</ul>
